@@ -1,7 +1,9 @@
-package com.wei.demo.rocketmq.rocketmq.officaldemo.orderexample;
+package com.wei.demo.rocketmq.rocketmq.officaldemo.order;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.*;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -9,7 +11,6 @@ import org.apache.rocketmq.common.message.MessageExt;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @Author: weiwenfeng
@@ -17,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Consumer {
     public static void main(String[] args) throws MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name_3");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("default-consumer");
         consumer.setNamesrvAddr("127.0.0.1:9876");
         /**
          * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
@@ -25,12 +26,10 @@ public class Consumer {
          */
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
-        consumer.subscribe("TopicTestjjj", "TagA || TagC || TagD");
+        consumer.subscribe("order-topic", "*");
 
         consumer.registerMessageListener(new MessageListenerConcurrently() {
-
             Random random = new Random();
-
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                 System.out.print(Thread.currentThread().getName() + " Receive New Messages: " );

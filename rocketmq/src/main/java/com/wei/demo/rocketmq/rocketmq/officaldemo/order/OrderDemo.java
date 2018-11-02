@@ -1,4 +1,4 @@
-package com.wei.demo.rocketmq.rocketmq.officaldemo.orderexample;
+package com.wei.demo.rocketmq.rocketmq.officaldemo.order;
 
 /**
  * @Author: weiwenfeng
