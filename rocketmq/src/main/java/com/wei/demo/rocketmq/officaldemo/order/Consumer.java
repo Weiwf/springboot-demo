@@ -1,4 +1,4 @@
-package com.wei.demo.rocketmq.rocketmq.officaldemo.order;
+package com.wei.demo.rocketmq.officaldemo.order;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
